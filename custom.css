@@ -1,0 +1,23 @@
+.reveal h1 { font-size: 2.5em;
+             text-shadow: none;
+             font-weight: bold;
+             text-transform: none;
+           }
+h1.title { margin-bottom: 0.5em;
+           margin-top: 1.5em; }
+h2.author{ font-size: 1.5em;
+           text-transform: capitalize;}
+
+.reveal section img { background:none; border:none; box-shadow:none; }
+
+.reveal pre {
+    width: 100%;
+    border: none;
+    box-shadow: none;
+}
+
+img.scaled {
+    width: 100%;
+}
+
+.slides img{border: none; background:none;}
