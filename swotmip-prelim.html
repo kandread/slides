@@ -11,7 +11,7 @@
 </style>
 <link rel="stylesheet" href="reveal.js/css/reveal.css">
 
-<link rel="stylesheet" href="reveal.js/css/theme/league.css" id="theme">
+<link rel="stylesheet" href="reveal.js/css/theme/League.css" id="theme">
 
 <link rel="stylesheet" href="reveal.js/custom.css">
 
@@ -33,8 +33,8 @@
 <section id="sec-title-slide"><h1 class="title">SWOT ST MODEL INTER-COMPARISON <br> LISFLOOD-FP: Preliminary Results</h1><h2 class="author">Kostas Andreadis</h2>
 </section>
 <section>
-<section id="slide-orga5ddd32">
-<h2 id="orga5ddd32">Study area</h2>
+<section id="slide-orgbc0366b">
+<h2 id="orgbc0366b">Study area</h2>
 <p>
 <img src="images/arkansas.png" alt="arkansas.png" />
 Arkansas River basin
@@ -42,8 +42,8 @@ Arkansas River basin
 </section>
 </section>
 <section>
-<section id="slide-org2555f24">
-<h2 id="org2555f24">Model description</h2>
+<section id="slide-org875ee9e">
+<h2 id="org875ee9e">Model description</h2>
 <ul>
 <li>LISFLOOD-FP, a raster-based hydrodynamic model</li>
 <li>Adaptive time stepping to improve stability</li>
@@ -55,18 +55,18 @@ Arkansas River basin
 \[\underbrace{\frac{\partial Q}{\partial t}}_{acceleration} + \underbrace{\frac{\partial}{\partial x} \frac{Q^{2}}{A}}_{advection} + \underbrace{\frac{g A \partial (h +z)}{\partial x}}_{water~slope} + \underbrace{\frac{g n^{2} Q^{2}}{R^{4/3}A}}_{friction~slope} = 0\]
 </p>
 </section>
-<section id="slide-orgf48aef2">
-<h3 id="orgf48aef2">Sub-grid channel formulation</h3>
+<section id="slide-org91a9929">
+<h3 id="org91a9929">Sub-grid channel formulation</h3>
 
 <div class="figure">
-<p><img src="images/lisflood_subgrid.png" alt="lisflood_subgrid.png" width="88%" />  
+<p><img src="images/lisflood_subgrid.png" alt="lisflood_subgrid.png" width="88%" />
 </p>
 </div>
 </section>
 </section>
 <section>
-<section id="slide-org0a3f24c">
-<h2 id="org0a3f24c">Pre-processing steps</h2>
+<section id="slide-org38f01c3">
+<h2 id="org38f01c3">Pre-processing steps</h2>
 <ol>
 <li>Resample DEM to 1-km resolution</li>
 <li>Generate the river network and chainage</li>
@@ -76,6 +76,52 @@ Arkansas River basin
 <li>Derive river channel cross-sections</li>
 
 </ol>
+</section>
+<section id="slide-org82c3176">
+<h3 id="org82c3176">River network and DEM</h3>
+</section>
+<section id="slide-orgfdaab4a">
+<h3 id="orgfdaab4a">River bank heights, widths and depths</h3>
+</section>
+<section id="slide-org4e270b7">
+<h3 id="org4e270b7">Boundary inflows</h3>
+</section>
+</section>
+<section>
+<section id="slide-orgb6e5eb8">
+<h2 id="orgb6e5eb8">Simple Muskingum-Cunge routing</h2>
+
+<div class="figure">
+<p><img src="images/arkansas_vic.png" alt="arkansas_vic.png" width="80%" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgecb0a2b">
+<h2 id="orgecb0a2b">Maximum water depth</h2>
+</section>
+</section>
+<section>
+<section id="slide-org4b11c41">
+<h2 id="org4b11c41">Comparison with streamflow measurements</h2>
+</section>
+</section>
+<section>
+<section id="slide-orge62943a">
+<h2 id="orge62943a">Next steps</h2>
+<ul>
+<li>Model pre-processing has been automated
+<ul>
+<li>See <a href="https://kandread.github.io/posts/Setting-up-the-LISFLOOD-FP-Arkansas-simulation/">blog post</a> for details.</li>
+
+</ul></li>
+<li>Extend simulation to entire Mississipi basin</li>
+<li></li>
+
+<li>Data assimilation algorithms for generating Level-4 products being developed</li>
+
+</ul>
 </section>
 </section>
 </div>
