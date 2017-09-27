@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Impact of SWOT orbit on cycle-average discharge</title>
+<meta name="author" content="(Kostas Andreadis)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="file:///Users/kandread/.reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="file:///Users/kandread/.reveal.js/css/theme/league.css" id="theme"/>
+
+<link rel="stylesheet" href="/Users/kandread/.reveal.js/custom.css"/>
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'file:///Users/kandread/.reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Impact of SWOT orbit on cycle-average discharge</h1><h2 class="author">Kostas Andreadis</h2><h2 class="date">HR ADT Meeting, September 27, 2017</h2>
+</section>
+
+<section>
+<section id="slide-orga7365b7">
+<h2 id="orga7365b7">Motivation</h2>
+<ul>
+<li>Deriving cycle-average products will require exploring different algorithms</li>
+<li>Possible approaches
+<ul>
+<li class="fragment appear">Simple arithmetic mean</li>
+<li class="fragment appear">Spatio-temporal interpolation (e.g. work by R. Paiva; Y. Yoon among others)</li>
+<li class="fragment appear">Provide all values for cycle and either summary statistics or let user process further</li>
+<li class="fragment appear">Use a data assimilation algorithm to calculate cycle-average</li>
+
+</ul></li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-org419b5d5">
+<h2 id="org419b5d5">Experimental design</h2>
+<ul>
+<li>What is the expected error if we just used a simple arithmetic mean?</li>
+<li>Use RAPID routing model over HydroSHEDS river network to derive spatially-distributed streamflow time series</li>
+<li>Calculate errors of average discharge using only values sampled by SWOT versus "true" average</li>
+
+</ul>
+
+</section>
+</section>
+<section>
+<section id="slide-orgfdb7aa5">
+<h2 id="orgfdb7aa5">Average discharge error from simple averaging</h2>
+
+<div class="figure">
+<p><img src="images/meanqerror.png" alt="meanqerror.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org34de33c">
+<h2 id="org34de33c">Maximum discharge error from simple averaging</h2>
+
+<div class="figure">
+<p><img src="images/maxqerror.png" alt="maxqerror.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org706c061">
+<h2 id="org706c061">Discharge error standard deviation from simple averaging</h2>
+
+<div class="figure">
+<p><img src="images/stdqerror.png" alt="stdqerror.png" />
+</p>
+</div>
+
+</section>
+</section>
+<section>
+<section id="slide-org2914451">
+<h2 id="org2914451">Error histograms</h2>
+<div class="column" style="float:left; width: 33%">
+<p>
+Mean
+<img src="images/meanqerror_hist.png" alt="meanqerror_hist.png" />
+</p>
+</div>
+<div class="column" style="display:inline-block; width: 33%">
+<p>
+Maximum
+<img src="images/maxqerror_hist.png" alt="maxqerror_hist.png" />
+</p>
+</div>
+<div class="column" style="float:right; width: 33%">
+<p>
+Stddev
+<img src="images/stdqerror_hist.png" alt="stdqerror_hist.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgc253d9e">
+<h2 id="orgc253d9e">Example time series</h2>
+
+<div class="figure">
+<p><img src="images/swot1.png" alt="swot1.png" />
+</p>
+</div>
+
+<p>
+Average error of 60.6%
+</p>
+</section>
+</section>
+<section>
+<section id="slide-orgb9475e0">
+<h2 id="orgb9475e0">Next steps</h2>
+<ul>
+<li>Perform similar exercise for water surface elevation and width</li>
+<li>Feasibility of different forward models for data assimilation
+<ul>
+<li>RAPID</li>
+<li>Gradually-varied flow</li>
+
+</ul></li>
+<li>Evaluate in (some) Pepsi challenge rivers</li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="file:///Users/kandread/.reveal.js/lib/js/head.min.js"></script>
+<script src="file:///Users/kandread/.reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: false,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+minScale: 0.20,
+maxScale: 1.40,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'file:///Users/kandread/.reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'file:///Users/kandread/.reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///Users/kandread/.reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'file:///Users/kandread/.reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'file:///Users/kandread/.reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
