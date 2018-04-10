@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Regional Hydrological Extremes Assessment System</title>
+<meta name="author" content="(Kostas Andreadis)"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="reveal.js/css/theme/Black.css" id="theme"/>
+
+<link rel="stylesheet" href="custom_soya.css"/>
+<link rel="stylesheet" href="reveal.js/lib/css/zenburn.css"/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide" data-background="images/ccafs.jpg"><h1 class="title">Regional Hydrological Extremes Assessment System</h1>
+<h2 class="subtitle">NASA/JPL Software of the Year Award</h2>
+<h3 class="author">Kostas Andreadis</h3>
+</section>
+
+<section>
+<section id="slide-orgaa5904d">
+<h2 id="orgaa5904d">Motivation</h2>
+<ul>
+<li class="fragment appear">Water resources management is a major challenge globally</li>
+<li class="fragment appear">Information is often derived from datasets being offered to end users by data producers</li>
+<li class="fragment appear">rather than users running their own product-generating systems</li>
+<li class="fragment appear">Customizations would be too expensive for users</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgf35bf8b">
+<h2 id="orgf35bf8b">Still complicated!</h2>
+
+<div class="figure">
+<p><img src="images/earthdata.png" alt="earthdata.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgbe3b729">
+<h2 id="orgbe3b729">RHEAS</h2>
+<ul>
+<li>Need for software that can</li>
+
+</ul>
+<ul>
+<li class="fragment appear">"curate" datasets for hydrological information and automate download</li>
+<li class="fragment appear">deploy simulations with minimal configuration</li>
+<li class="fragment appear">exploit available information (i.e. data assimilation)</li>
+<li class="fragment appear">deliver data in a GIS format</li>
+<li class="fragment appear">be a cost effective solution</li>
+
+</ul>
+<ul>
+<li class="fragment appear"><font color="DodgerBlue">Scientists are not trained in software engineering!</font></li>
+
+</ul>
+</section>
+<section id="slide-org106c7a5" data-background="images/meme1.jpg" data-background-transition="slide">
+<h3 id="org106c7a5"></h3>
+</section>
+</section>
+<section>
+<section id="slide-orga5e3e0e">
+<h2 id="orga5e3e0e">System architecture</h2>
+
+<div class="figure">
+<p><img src="images/architecture.png" alt="architecture.png" style="width:70%" />
+</p>
+</div>
+</section>
+<section id="slide-org091c7e9">
+<h3 id="org091c7e9">Database</h3>
+<div class="threecolumn"><div>
+<p>
+PostgreSQL/PostGIS
+<img src="images/postgis.png" alt="postgis.png" />
+</p>
+</div><div>
+
+<div class="figure">
+<p><img src="images/postgis1.png" alt="postgis1.png" />
+</p>
+</div>
+</div><div style="width: 80% margin-bottom:1cm">
+
+<div class="figure">
+<p><img src="images/postgis2.png" alt="postgis2.png" />
+</p>
+</div>
+</div></div>
+</section>
+<section id="slide-org51cb029">
+<h3 id="org51cb029"></h3>
+<div class="column" style="float:left; width: 40%; margin-top:10%">
+<ul>
+<li>Object-oriented design</li>
+<li>Allows for code reuse</li>
+<li>Easy to extend functionality</li>
+
+</ul>
+</div>
+<div class="column" style="float:right; width: 60%">
+
+<div class="figure">
+<p><img src="images/class_uml.png" alt="class_uml.png" />
+</p>
+</div>
+</div>
+</section>
+<section id="slide-org94d292a">
+<h3 id="org94d292a">Metaprogramming</h3>
+<div class="org-src-container">
+
+<pre><code class="python" >from decorators import http, geotiff
+
+@geotiff
+@http
+def fetch(dbname, dt, bbox):
+    """Downloads CHIRPS rainfall data from the data server."""
+    url = "ftp://... chirps-v2.0.{0:04d}.{1:02d}.{2:02d}.tif.gz"
+    return url, bbox, dt
+</code></pre>
+</div>
+</section>
+<section id="slide-org8afd5d1">
+<h3 id="org8afd5d1">Focus on ease of use</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Downloading datasets
+</p>
+<pre class="example" class="fragment appear">
+[domain]
+minlat: 2
+maxlat: -2
+minlon: 30
+maxlon: 34
+
+[trmm]
+
+[iri]
+startdate: 2000-2-1
+enddate: 2000-3-1
+
+[chirps]
+startdate: 2014-1-3
+</pre>
+</div>
+<div class="column" style="float:right; width: 50%">
+<p>
+Running a hydrologic simulation
+</p>
+<pre class="example" class="fragment appear">
+[nowcast]
+model: vic
+startdate: 2003-1-1
+enddate: 2003-3-31
+basin: data/tests/basin.shp
+name: basin
+resolution: 0.25
+
+[vic]
+precip: chirps
+temperature: ncep
+wind: ncep
+initialize: yes
+save to: db
+save: net_short, soil_moist
+</pre>
+</div>
+</section>
+<section id="slide-org43f471b">
+<h3 id="org43f471b">Sample products</h3>
+<p>
+Corn yield map over Kenya
+</p>
+
+<div class="figure">
+<p><img src="images/yield_map.png" alt="yield_map.png" width="50%" />
+</p>
+</div>
+</section>
+<section id="slide-orga9e1310">
+<h3 id="orga9e1310">Integration with Github services</h3>
+<div class="column" style="float:left; width: 50%">
+<p>
+Issue tracker
+<img src="images/github_issues.png" alt="github_issues.png" />
+</p>
+</div>
+
+<div class="column" style="float:right; width: 50%">
+<p>
+Documentation
+<img src="images/readthedocs.png" alt="readthedocs.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orge1a4f0a">
+<h2 id="orge1a4f0a">Cultivating knowledge</h2>
+<div class="outline-text-2" id="text-orge1a4f0a">
+</div>
+</section>
+<section id="slide-orgfcf61e0">
+<h3 id="orgfcf61e0"></h3>
+<div class="column" style="float:left; font-size:26px; width: 50%">
+<blockquote nil>
+<p>
+As a scientist at the Ethiopian Institute of Agriculture Research, Degefie Tibebe&#x2026; "We were very impressed," he said, "RHEAS integrates satellite products to simulate extreme events. Drought is one of the extreme events that affects Ethiopia repeatedly."
+</p>
+</blockquote>
+</div>
+
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="images/feeding-eastern-africa-5.jpg" alt="feeding-eastern-africa-5.jpg" />
+</p>
+</div>
+</div>
+</section>
+<section id="slide-org65feb3b">
+<h3 id="org65feb3b">Stakeholder involvement</h3>
+<div class="column" style="float:left; width: 30%">
+
+<div class="figure">
+<p><img src="images/feeding-eastern-africa-2.jpg" alt="feeding-eastern-africa-2.jpg" />
+</p>
+</div>
+</div>
+<div class="column" style="float:right; width: 50%">
+
+<div class="figure">
+<p><img src="images/nzoia_yield.png" alt="nzoia_yield.png" />
+</p>
+</div>
+</div>
+</section>
+<section id="slide-org46bc490">
+<h3 id="org46bc490"></h3>
+<blockquote nil>
+<p>
+Dr. Nguyen Tung Phong, the Deputy Director of VAWR said, "I expect that systems like RHEAS will help the academy towards improving their skills in drought monitoring and forecasting efficiently, accurately, and timely." He projected that the system would help provinces as well as the Department of Agriculture and Rural Development to respond to and take effective measures in a much quicker and efficient manner.
+</p>
+</blockquote>
+</section>
+<section id="slide-org4afdcb8">
+<h3 id="org4afdcb8">Outreach and training</h3>
+
+<div class="figure">
+<p><img src="images/vawr_group_photo.jpg" alt="vawr_group_photo.jpg" />
+</p>
+</div>
+</section>
+<section id="slide-org96b5348">
+<h3 id="org96b5348">User-developed portal</h3>
+<p>
+<img src="images/adpc_portal.png" alt="adpc_portal.png" />
+<a href="https://rdcyis-servir.adpc.net/map">https://rdcyis-servir.adpc.net/map</a>
+</p>
+</section>
+</section>
+<section>
+<section id="slide-org3eb32df">
+<h2 id="org3eb32df">Questions?</h2>
+</section>
+</section>
+</div>
+</div>
+<script src="reveal.js/lib/js/head.min.js"></script>
+<script src="reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: 'c',
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'reveal.js/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }]
+});
+</script>
+</body>
+</html>
